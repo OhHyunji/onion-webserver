@@ -17,8 +17,6 @@ import com.google.common.base.Strings;
 public class RequestHandler extends Thread {
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 	private static final String WEBAPP_ROOT_PATH = "./webapp";
-	private static final String ROOT_PATH = "/";
-	private static final String DEFAULT_PATH = "/index.html";
 
 	private Socket connection;
 
@@ -32,24 +30,20 @@ public class RequestHandler extends Thread {
 		try(InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
-			String filePath = DEFAULT_PATH;
+			/* request line: GET /index.html HTTP/1.1 */
+			String line = bufferedReader.readLine();
+			if(line == null) {
+				return;
+			}
+			String[] tokens = line.split(" ");
 
-			while (true) {
-				String line = bufferedReader.readLine();
-
-				if(Strings.isNullOrEmpty(line)) {
-					break;
-				}
-
-				/* startLine: GET /index.html HTTP/1.1 */
-				if(line.contains("GET")) {
-					String[] token = line.split(" ");
-					String path = token[1];
-					filePath = path.equals(ROOT_PATH) ? DEFAULT_PATH : path;
-				}
+			/* request headers */
+			while (!line.equals("")) {
+				line = bufferedReader.readLine();
+				log.debug(line);
 			}
 
-			byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + filePath));
+			byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + tokens[1]));
 
 			DataOutputStream dos = new DataOutputStream(out);
 			response200Header(dos, body.length);

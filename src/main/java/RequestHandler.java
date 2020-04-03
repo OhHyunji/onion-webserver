@@ -8,16 +8,18 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
+import model.User;
+import util.HttpRequestUtils;
 
 public class RequestHandler extends Thread {
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 	private static final String WEBAPP_ROOT_PATH = "./webapp";
-
+	private static final String ROUTE_USER_CREATE = "/user/create";
 	private Socket connection;
 
 	public RequestHandler(Socket connection) {
@@ -37,17 +39,21 @@ public class RequestHandler extends Thread {
 			}
 			String[] tokens = line.split(" ");
 
-			/* request headers */
-			while (!line.equals("")) {
-				line = bufferedReader.readLine();
-				log.debug(line);
+			String url = tokens[1];
+
+			if(url.startsWith(ROUTE_USER_CREATE)) {
+				int index = url.indexOf("?");
+				String path = url.substring(0, index);
+				String queryString = url.substring(index+1);
+				Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+				User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
+				log.debug(user.toString());
+			} else {
+				byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + tokens[1]));
+				DataOutputStream dos = new DataOutputStream(out);
+				response200Header(dos, body.length);
+				responseBody(dos,body);
 			}
-
-			byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + tokens[1]));
-
-			DataOutputStream dos = new DataOutputStream(out);
-			response200Header(dos, body.length);
-			responseBody(dos,body);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}

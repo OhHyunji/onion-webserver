@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import model.User;
 import util.HttpRequestUtils;
+import util.HttpRequestUtils.Pair;
+import util.IOUtils;
 
 public class RequestHandler extends Thread {
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -32,20 +34,30 @@ public class RequestHandler extends Thread {
 		try(InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
-			/* request line: GET /index.html HTTP/1.1 */
 			String line = bufferedReader.readLine();
 			if(line == null) {
 				return;
 			}
-			String[] tokens = line.split(" ");
 
+			/* request line: GET /index.html HTTP/1.1 */
+			log.debug("{}", line);
+			String[] tokens = line.split(" ");
+			String method = tokens[0];
 			String url = tokens[1];
 
+			/* request header */
+			int contentLength = 0;
+			while (!line.equals("")) {
+				log.debug("header: {}", line);
+				line = bufferedReader.readLine();
+				if(line.contains("Content-Length")) {
+					contentLength = getContentLength(line);
+				}
+			}
+
 			if(url.startsWith(ROUTE_USER_CREATE)) {
-				int index = url.indexOf("?");
-				String path = url.substring(0, index);
-				String queryString = url.substring(index+1);
-				Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+				String body = IOUtils.readData(bufferedReader, contentLength);
+				Map<String, String> params = HttpRequestUtils.parseQueryString(body);
 				User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
 				log.debug(user.toString());
 			} else {
@@ -77,6 +89,10 @@ public class RequestHandler extends Thread {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
+	}
 
+	private int getContentLength(String line) {
+		String[] headerTokens = line.split(":");
+		return Integer.parseInt(headerTokens[1].trim());
 	}
 }

@@ -14,6 +14,8 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Maps;
+
 import db.DataBase;
 import model.User;
 import util.HttpRequestUtils;
@@ -50,18 +52,22 @@ public class RequestHandler extends Thread {
 
 			// request header
 			int contentLength = 0;
+			Map<String, String> cookies = Maps.newHashMap();
 			while (!line.equals("")) {
 				log.debug("header: {}", line);
 				line = bufferedReader.readLine();
 				if(line.contains("Content-Length")) {
 					contentLength = getContentLength(line);
 				}
+				if(line.contains("Cookie")) {
+					cookies = HttpRequestUtils.parseCookies(getCookies(line));
+				}
 			}
 
 			/* response 만들기 (by OutputStream) */
 			DataOutputStream dos = new DataOutputStream(out);
 
-			if(method.equals("POST") && url.startsWith("/user/create")) {
+			if(method.equals("POST") && url.equals("/user/create")) {
 				String body = IOUtils.readData(bufferedReader, contentLength);
 				Map<String, String> params = HttpRequestUtils.parseQueryString(body);
 				User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
@@ -69,7 +75,7 @@ public class RequestHandler extends Thread {
 				DataBase.addUser(user);
 
 				response302Header(dos, "/index.html");
-			} else if(method.equals("POST") && url.startsWith("/user/login")) {
+			} else if(method.equals("POST") && url.equals("/user/login")) {
 				String body = IOUtils.readData(bufferedReader, contentLength);
 				Map<String, String> params = HttpRequestUtils.parseQueryString(body);
 				User user = DataBase.findByUserId(params.get("userId"));
@@ -80,6 +86,15 @@ public class RequestHandler extends Thread {
 				}
 				// 로그인 실패
 				response302HeaderWithCookie(dos, "/user/login_failed.html", "login=false");
+			} else if(method.equals("GET") && url.equals("/user/list")) {
+				// 로그인 상태이면 사용자목록 출력
+				if(isLoginSuccess(cookies)) {
+					byte[] body = getUserListHtml().getBytes();
+					response200Header(dos, body.length);
+					responseBody(dos,body);
+				}
+				// 로그인 상태가 아니면 "/user/login.html"로 이동
+				response302Header(dos, "/user/login.html");
 			} else {
 				byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + url));
 				response200Header(dos, body.length);
@@ -134,5 +149,30 @@ public class RequestHandler extends Thread {
 	private int getContentLength(String line) {
 		String[] headerTokens = line.split(":");
 		return Integer.parseInt(headerTokens[1].trim());
+	}
+
+	private String getCookies(String line) {
+		String[] cookieTokens = line.split(":");
+		return cookieTokens[1].trim();
+	}
+
+	private boolean isLoginSuccess(Map<String, String> cookies) {
+		if(cookies.isEmpty()) {
+			return false;
+		}
+
+		return Boolean.parseBoolean(cookies.get("login"));
+	}
+
+	private String getUserListHtml() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<table><tr><th>userId</th><th>userName</th><th>email</th></tr>");
+		DataBase.findAll().forEach(u -> sb.append(getUserHtml(u)));
+		sb.append("</table>");
+		return sb.toString();
+	}
+
+	private String getUserHtml(User user) {
+		return String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", user.getUserId(), user.getName(), user.getEmail());
 	}
 }

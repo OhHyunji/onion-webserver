@@ -53,14 +53,18 @@ public class RequestHandler extends Thread {
 			// request header
 			int contentLength = 0;
 			Map<String, String> cookies = Maps.newHashMap();
+			String accept = "";
 			while (!line.equals("")) {
 				log.debug("header: {}", line);
 				line = bufferedReader.readLine();
-				if(line.contains("Content-Length")) {
+				if(line.contains("Content-Length:")) {
 					contentLength = getContentLength(line);
 				}
-				if(line.contains("Cookie")) {
+				if(line.contains("Cookie:")) {
 					cookies = HttpRequestUtils.parseCookies(getCookies(line));
+				}
+				if(line.contains("Accept:")) {
+					accept = getAcceptFromRequestHeader(line);
 				}
 			}
 
@@ -91,13 +95,19 @@ public class RequestHandler extends Thread {
 				if(isLoginSuccess(cookies)) {
 					byte[] body = getUserListHtml().getBytes();
 					response200Header(dos, body.length);
-					responseBody(dos,body);
+					responseBody(dos, body);
 				}
 				// 로그인 상태가 아니면 "/user/login.html"로 이동
 				response302Header(dos, "/user/login.html");
 			} else {
 				byte[] body = Files.readAllBytes(Paths.get(WEBAPP_ROOT_PATH + url));
-				response200Header(dos, body.length);
+
+				if(url.endsWith(".css") || accept.contains("text/css")) {
+					response200CssHeader(dos, body.length);
+				} else {
+					response200Header(dos, body.length);
+				}
+
 				responseBody(dos,body);
 			}
 		} catch (IOException e) {
@@ -109,6 +119,17 @@ public class RequestHandler extends Thread {
 		try {
 			dos.writeBytes("HTTP/1.1 200 OK \r\n");
 			dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
+			dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
+			dos.writeBytes("\r\n");
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		}
+	}
+
+	private void response200CssHeader(DataOutputStream dos, int lengthOfBodyContent) {
+		try {
+			dos.writeBytes("HTTP/1.1 200 OK \r\n");
+			dos.writeBytes("Content-Type: text/css;charset=utf-8\r\n");
 			dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
 			dos.writeBytes("\r\n");
 		} catch (IOException e) {
@@ -154,6 +175,11 @@ public class RequestHandler extends Thread {
 	private String getCookies(String line) {
 		String[] cookieTokens = line.split(":");
 		return cookieTokens[1].trim();
+	}
+
+	private String getAcceptFromRequestHeader(String line) {
+		String[] acceptTokens = line.split(":");
+		return acceptTokens[1].trim();
 	}
 
 	private boolean isLoginSuccess(Map<String, String> cookies) {

@@ -13,6 +13,11 @@ public class HttpRequestUtils {
 		return parseValues(queryString, "&");
 	}
 
+	/* 쿠키 값은 key1=value1; key2=value2 형식이다. */
+	public static Map<String, String> parseCookies(String cookies) {
+		return parseValues(cookies, ";");
+	}
+
 	private static Map<String, String> parseValues(String values, String separator) {
 		if(Strings.isNullOrEmpty(values)) {
 			return Maps.newHashMap();

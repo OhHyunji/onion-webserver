@@ -1,4 +1,4 @@
-package http;
+package webserver.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.util.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
-import util.HttpRequestUtils;
-import util.IOUtils;
+import webserver.util.HttpRequestUtils;
+import webserver.util.IOUtils;
 
 public class HttpRequest {
 	private final HttpMethod method;

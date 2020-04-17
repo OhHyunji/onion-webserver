@@ -1,8 +1,8 @@
-package controller;
+package webserver.controller;
 
 import http.HttpRequest;
 import http.HttpResponse;
-import route.FrontPath;
+import webserver.route.FrontPath;
 
 public class RootController extends AbstractController {
     @Override

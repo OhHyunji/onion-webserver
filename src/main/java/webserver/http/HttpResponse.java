@@ -1,4 +1,4 @@
-package http;
+package webserver.http;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

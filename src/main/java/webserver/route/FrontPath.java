@@ -1,4 +1,4 @@
-package route;
+package webserver.route;
 
 public class FrontPath {
     public static final String DEFAULT_PAGE = "/index.html";

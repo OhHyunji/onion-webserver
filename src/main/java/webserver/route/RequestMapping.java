@@ -1,4 +1,4 @@
-package route;
+package webserver.route;
 
 public class RequestMapping {
     public static final String ROOT = "/";

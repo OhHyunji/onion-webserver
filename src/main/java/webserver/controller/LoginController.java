@@ -1,10 +1,10 @@
-package controller;
+package webserver.controller;
 
-import db.DataBase;
+import webserver.db.DataBase;
 import http.HttpRequest;
 import http.HttpResponse;
-import model.User;
-import route.FrontPath;
+import webserver.model.User;
+import webserver.route.FrontPath;
 
 import java.util.Optional;
 

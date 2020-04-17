@@ -40,7 +40,7 @@ public class RequestHandler extends Thread {
 		try(InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 			HttpRequest request = new HttpRequest(in);
 			HttpMethod method = request.getMethod();
-			String url = request.getUrl();
+			String url = request.getPath();
 
 			/* response 만들기 (by OutputStream) */
 			DataOutputStream dos = new DataOutputStream(out);

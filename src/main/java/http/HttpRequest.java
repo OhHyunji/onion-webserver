@@ -16,7 +16,7 @@ import util.IOUtils;
 
 public class HttpRequest {
 	private final HttpMethod method;
-	private final String url;
+	private final String path;
 
 	private final Map<String, String> header = Maps.newHashMap();
 	private final Map<String, String> params = Maps.newHashMap();
@@ -31,10 +31,10 @@ public class HttpRequest {
 
 		boolean hasQueryParam = tokens[1].contains("?");
 		if(!hasQueryParam) {
-			this.url = tokens[1];
+			this.path = tokens[1];
 		} else {
 			String[] urlTokens = tokens[1].split("\\?");
-			this.url = urlTokens[0];
+			this.path = urlTokens[0];
 			this.params.putAll(HttpRequestUtils.parseQueryString(urlTokens[1]));
 		}
 
@@ -56,8 +56,8 @@ public class HttpRequest {
 		return this.method;
 	}
 
-	public String getUrl() {
-		return this.url;
+	public String getPath() {
+		return this.path;
 	}
 
 	public Optional<String> getHeader(String key) {

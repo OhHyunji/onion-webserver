@@ -15,7 +15,7 @@ public class HttpRequestTest {
         HttpRequest request = new HttpRequest(in);
 
         assertEquals(HttpMethod.GET, request.getMethod());
-        assertEquals("/user/create", request.getPath());
+        assertEquals("/user/create", request.getUrl());
         assertEquals("keep-alive", request.getHeader("Connection").orElse(null));
         assertEquals("javajigi", request.getRequiredParams("userId"));
     }
@@ -26,7 +26,7 @@ public class HttpRequestTest {
         HttpRequest request = new HttpRequest(in);
 
         assertEquals(HttpMethod.POST, request.getMethod());
-        assertEquals("/user/create", request.getPath());
+        assertEquals("/user/create", request.getUrl());
         assertEquals("keep-alive", request.getHeader("Connection").orElse(null));
         assertEquals("javajigi", request.getRequiredParams("userId"));
     }
@@ -37,7 +37,7 @@ public class HttpRequestTest {
         HttpRequest request = new HttpRequest(in);
 
         assertEquals(HttpMethod.POST, request.getMethod());
-        assertEquals("/user/create", request.getPath());
+        assertEquals("/user/create", request.getUrl());
         assertEquals("keep-alive", request.getHeader("Connection").orElse(null));
         assertEquals("1", request.getRequiredParams("id"));
         assertEquals("javajigi", request.getRequiredParams("userId"));

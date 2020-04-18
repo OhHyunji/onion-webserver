@@ -3,7 +3,6 @@ package servletserver.servlet;
 import servletserver.db.DataBase;
 import servletserver.model.User;
 import servletserver.route.WebServletPath;
-import webserver.route.FrontPath;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

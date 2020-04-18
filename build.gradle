@@ -20,5 +20,8 @@ dependencies {
     compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.15'
     compile 'org.apache.tomcat.embed:tomcat-embed-jasper:8.0.15'
 
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet:jstl:1.2'
+
     testCompile 'junit:junit:4.12'
 }

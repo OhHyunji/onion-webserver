@@ -14,5 +14,11 @@ repositories {
 dependencies {
     compile 'com.google.guava:guava:11.0.2'
     compile 'ch.qos.logback:logback-classic:1.2.3'
+
+    // tomcat
+    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.15'
+    compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.15'
+    compile 'org.apache.tomcat.embed:tomcat-embed-jasper:8.0.15'
+
     testCompile 'junit:junit:4.12'
 }

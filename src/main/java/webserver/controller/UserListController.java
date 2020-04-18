@@ -1,8 +1,8 @@
 package webserver.controller;
 
 import webserver.db.DataBase;
-import http.HttpRequest;
-import http.HttpResponse;
+import webserver.http.HttpRequest;
+import webserver.http.HttpResponse;
 import webserver.model.User;
 import webserver.route.FrontPath;
 

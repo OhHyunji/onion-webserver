@@ -1,7 +1,7 @@
 package webserver.controller;
 
-import http.HttpRequest;
-import http.HttpResponse;
+import webserver.http.HttpRequest;
+import webserver.http.HttpResponse;
 import webserver.route.FrontPath;
 
 public class RootController extends AbstractController {

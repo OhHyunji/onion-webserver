@@ -2,10 +2,10 @@ package webserver;
 
 import com.google.common.collect.Maps;
 import webserver.controller.*;
-import http.HttpRequest;
-import http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.http.HttpRequest;
+import webserver.http.HttpResponse;
 import webserver.route.RequestMapping;
 
 import java.io.IOException;

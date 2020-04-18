@@ -1,8 +1,8 @@
 package webserver.controller;
 
 import webserver.db.DataBase;
-import http.HttpRequest;
-import http.HttpResponse;
+import webserver.http.HttpRequest;
+import webserver.http.HttpResponse;
 import webserver.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,18 +17,15 @@ import java.util.Optional;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Optional<User> user = DataBase.findByUserId(req.getParameter("userId"));
+        Optional<User> loginUser = DataBase.findByUserId(req.getParameter("userId"))
+                .filter(u -> u.getPassword().equals(req.getParameter("password")));
 
-//        if(user.isPresent() && password.equals(u.getPassword()) {
-//            String password = req.getParameter("password");
-//            if(password.equals(u.getPassword())) {
-//                resp.addHeader("Set-Cookie", "login=true");
-//                resp.sendRedirect(WebAppPath.DEFAULT_PAGE);
-//            }
-//        }
-
-        resp.addHeader("Set-Cookie", "login=false");
-        resp.sendRedirect(WebAppPath.LOGIN_FAILED_PAGE);
-
+        if(loginUser.isPresent()) {
+            resp.addHeader("Set-Cookie", "login=true");
+            resp.sendRedirect(WebAppPath.DEFAULT_PAGE);
+        } else {
+            resp.addHeader("Set-Cookie", "login=false");
+            resp.sendRedirect(WebAppPath.LOGIN_FAILED_PAGE);
+        }
     }
 }

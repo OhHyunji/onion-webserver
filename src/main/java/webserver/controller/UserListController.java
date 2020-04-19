@@ -1,10 +1,10 @@
 package webserver.controller;
 
-import webserver.db.DataBase;
+import core.db.DataBase;
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
-import webserver.model.User;
-import webserver.route.WebAppPath;
+import core.model.User;
+import core.route.WebAppPath;
 
 public class UserListController extends AbstractController {
     @Override

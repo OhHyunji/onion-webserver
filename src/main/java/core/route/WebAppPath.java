@@ -1,4 +1,4 @@
-package webserver.route;
+package core.route;
 
 public class WebAppPath {
     public static final String DEFAULT_PAGE = "/index.html";

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
-import webserver.route.WebServerPath;
+import core.route.WebServerPath;
 
 import java.io.IOException;
 import java.io.InputStream;

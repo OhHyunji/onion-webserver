@@ -2,7 +2,7 @@ package webserver.controller;
 
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
-import webserver.route.WebAppPath;
+import core.route.WebAppPath;
 
 public class RootController extends AbstractController {
     @Override

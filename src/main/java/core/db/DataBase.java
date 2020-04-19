@@ -1,4 +1,4 @@
-package webserver.db;
+package core.db;
 
 import java.util.Collection;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.google.common.collect.Maps;
 
-import webserver.model.User;
+import core.model.User;
 
 public class DataBase {
 	private static final Map<String, User> users = Maps.newHashMap();

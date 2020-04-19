@@ -1,9 +1,9 @@
 package servletserver.servlet;
 
-import webserver.db.DataBase;
-import webserver.model.User;
-import webserver.route.WebAppPath;
-import webserver.route.WebServerPath;
+import core.db.DataBase;
+import core.model.User;
+import core.route.WebAppPath;
+import core.route.WebServerPath;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

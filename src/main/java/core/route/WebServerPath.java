@@ -1,4 +1,4 @@
-package webserver.route;
+package core.route;
 
 public class WebServerPath {
     public static final String ROOT = "/";

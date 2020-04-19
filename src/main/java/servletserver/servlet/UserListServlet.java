@@ -1,7 +1,8 @@
 package servletserver.servlet;
 
-import servletserver.db.DataBase;
-import servletserver.route.WebServletPath;
+import webserver.WebServer;
+import webserver.db.DataBase;
+import webserver.route.WebServerPath;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(WebServletPath.USER_LIST)
+@WebServlet(WebServerPath.USER_LIST)
 public class UserListServlet extends HttpServlet {
 
     @Override

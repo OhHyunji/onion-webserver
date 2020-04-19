@@ -1,4 +1,4 @@
-package servletserver.route;
+package webserver.route;
 
 public class WebAppPath {
     public static final String DEFAULT_PAGE = "/index.html";

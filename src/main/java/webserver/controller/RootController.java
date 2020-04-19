@@ -2,7 +2,7 @@ package webserver.controller;
 
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
-import webserver.route.FrontPath;
+import webserver.route.WebAppPath;
 
 public class RootController extends AbstractController {
     @Override
@@ -12,6 +12,6 @@ public class RootController extends AbstractController {
 
     @Override
     protected void doGet(HttpRequest request, HttpResponse response) {
-        response.redirect(FrontPath.DEFAULT_PAGE);
+        response.redirect(WebAppPath.DEFAULT_PAGE);
     }
 }

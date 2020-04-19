@@ -4,7 +4,7 @@ import webserver.db.DataBase;
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
 import webserver.model.User;
-import webserver.route.FrontPath;
+import webserver.route.WebAppPath;
 
 public class UserListController extends AbstractController {
     @Override
@@ -22,7 +22,7 @@ public class UserListController extends AbstractController {
         }
 
         // 로그인 상태가 아니면 로그인 페이지로 이동
-        response.redirect(FrontPath.LOGIN_PAGE);
+        response.redirect(WebAppPath.LOGIN_PAGE);
     }
 
     private String getUserListHtml() {

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.http.HttpRequest;
 import webserver.http.HttpResponse;
-import webserver.route.RequestMapping;
+import webserver.route.WebServerPath;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,10 +32,10 @@ public class RequestHandler extends Thread {
             HttpResponse response = new HttpResponse(out);
 
             Map<String, Controller> controllerMap = Maps.newHashMap();
-            controllerMap.put(RequestMapping.ROOT, new RootController());
-            controllerMap.put(RequestMapping.USER_CREATE, new UserCreateController());
-            controllerMap.put(RequestMapping.USER_LIST, new UserListController());
-            controllerMap.put(RequestMapping.LOGIN, new LoginController());
+            controllerMap.put(WebServerPath.ROOT, new RootController());
+            controllerMap.put(WebServerPath.USER_CREATE, new UserCreateController());
+            controllerMap.put(WebServerPath.USER_LIST, new UserListController());
+            controllerMap.put(WebServerPath.LOGIN, new LoginController());
 
             Optional.ofNullable(controllerMap.get(request.getUrl()))
                     .orElse(new DefaultController())

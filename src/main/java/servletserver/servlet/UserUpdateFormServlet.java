@@ -3,7 +3,7 @@ package servletserver.servlet;
 import core.db.DataBase;
 import core.model.User;
 import core.route.WebServerPath;
-import servletserver.utils.RequestUtils;
+import servletserver.utils.SessionUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class UserUpdateFormServlet extends HttpServlet {
     }
 
     private boolean allowUpdate(HttpServletRequest req) {
-        User loginUser = (User) RequestUtils.getLoginUser(req).orElseThrow(IllegalStateException::new);
+        User loginUser = SessionUtils.getLoginUser(req).orElseThrow(IllegalStateException::new);
         return loginUser.getUserId().equals(req.getParameter("userId"));
     }
 }

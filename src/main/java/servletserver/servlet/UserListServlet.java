@@ -1,8 +1,9 @@
 package servletserver.servlet;
 
 import core.db.DataBase;
+import core.model.User;
 import core.route.WebServerPath;
-import servletserver.utils.RequestUtils;
+import servletserver.utils.SessionUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ public class UserListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Optional<Object> loginUser = RequestUtils.getLoginUser(req);
+        Optional<User> loginUser = SessionUtils.getLoginUser(req);
 
         if(loginUser.isPresent()) {
             req.setAttribute("users", DataBase.findAll());

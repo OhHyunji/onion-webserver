@@ -1,4 +1,4 @@
-package servletserver.controller;
+package servletserver.mvc.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

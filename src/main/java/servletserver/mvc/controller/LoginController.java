@@ -1,10 +1,9 @@
-package servletserver.controller;
+package servletserver.mvc.controller;
 
 import core.db.DataBase;
 import core.model.User;
 import core.route.WebServerPath;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;

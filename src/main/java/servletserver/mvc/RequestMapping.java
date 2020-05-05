@@ -1,9 +1,9 @@
-package servletserver;
+package servletserver.mvc;
 
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import servletserver.controller.*;
+import servletserver.mvc.controller.*;
 
 import java.util.Map;
 

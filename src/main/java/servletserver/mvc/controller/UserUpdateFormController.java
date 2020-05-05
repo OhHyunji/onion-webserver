@@ -1,4 +1,4 @@
-package servletserver.controller;
+package servletserver.mvc.controller;
 
 import core.db.DataBase;
 import core.model.User;

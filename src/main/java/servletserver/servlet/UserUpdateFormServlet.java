@@ -3,6 +3,7 @@ package servletserver.servlet;
 import core.db.DataBase;
 import core.model.User;
 import core.route.WebServerPath;
+import servletserver.utils.RequestUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,10 +17,19 @@ import java.io.IOException;
 public class UserUpdateFormServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = DataBase.findByUserId(req.getParameter("userId")).orElseThrow(IllegalStateException::new);
-        req.setAttribute("user", user);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/user/updateForm.jsp");
-        requestDispatcher.forward(req, resp);
+        if(allowUpdate(req)) {
+            User user = DataBase.findByUserId(req.getParameter("userId")).orElseThrow(IllegalStateException::new);
+            req.setAttribute("user", user);
 
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/user/updateForm.jsp");
+            requestDispatcher.forward(req, resp);
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    private boolean allowUpdate(HttpServletRequest req) {
+        User loginUser = (User) RequestUtils.getLoginUser(req).orElseThrow(IllegalStateException::new);
+        return loginUser.getUserId().equals(req.getParameter("userId"));
     }
 }

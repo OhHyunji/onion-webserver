@@ -25,7 +25,10 @@
                         <td>${user.userId}</td>
                         <td>${user.name}</td>
                         <td>${user.email}</td>
-                        <td><a href="/users/updateForm?userId=${user.userId}" class="btn btn-success" role="button">수정</a>
+                        <td>
+                            <c:if test="${sessionScope.user.userId eq user.userId}">
+                                <a href="/users/updateForm?userId=${user.userId}" class="btn btn-success" role="button">수정</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

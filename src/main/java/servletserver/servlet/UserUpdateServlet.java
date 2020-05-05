@@ -17,6 +17,7 @@ public class UserUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"), req.getParameter("email"));
         DataBase.update(user);
+
         resp.sendRedirect(WebServerPath.USER_LIST);
     }
 }

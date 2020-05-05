@@ -4,6 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
+/**
+ * HomeServlet
+ * LoginFormServlet
+ * UserUpdateFormServlet
+ */
 public class ForwardController implements Controller{
     private final String forwardUrl;
 

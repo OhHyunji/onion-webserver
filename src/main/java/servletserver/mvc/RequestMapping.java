@@ -23,7 +23,7 @@ public class RequestMapping {
         mappings.put("/users/updateForm", new UserUpdateFormController());
         mappings.put("/users/update", new UserUpdateController());
 
-        log.info("###### Initialized Request Mapping ######");
+        log.info("###### Initialized Request Mapping.");
     }
 
     public Controller findController(String url) {

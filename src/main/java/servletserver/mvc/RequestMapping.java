@@ -8,8 +8,8 @@ import servletserver.mvc.controller.*;
 import java.util.Map;
 
 public class RequestMapping {
-    private static final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
-    private Map<String, Controller> mappings = Maps.newHashMap();
+    private static final Logger log = LoggerFactory.getLogger(RequestMapping.class);
+    private final Map<String, Controller> mappings = Maps.newHashMap();
 
     void initMapping() {
         mappings.put("/", new ForwardController("/home.jsp"));

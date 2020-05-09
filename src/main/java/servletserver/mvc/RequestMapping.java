@@ -13,6 +13,7 @@ public class RequestMapping {
 
     void initMapping() {
         mappings.put("/", new ForwardController("/home.jsp"));
+        mappings.put("/home", new ForwardController("/home.jsp"));
         mappings.put("/users/form", new ForwardController("/user/form.jsp"));
         mappings.put("/users/loginForm", new ForwardController("/user/login.jsp"));
         mappings.put("/users", new UserListController());

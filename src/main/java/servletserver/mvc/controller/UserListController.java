@@ -2,6 +2,7 @@ package servletserver.mvc.controller;
 
 import core.db.DataBase;
 import core.model.User;
+import core.route.WebServerPath;
 import servletserver.utils.SessionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,9 @@ public class UserListController implements Controller{
 
         if(loginUser.isPresent()) {
             request.setAttribute("users", DataBase.findAll());
-            return "/user/list.jsp";
+            return WebServerPath.USER_LIST;
         } else {
-            return "redirect:/users/loginForm";
+            return WebServerPath.REDIRECT_PREFIX + WebServerPath.LOGIN_FORM;
         }
     }
 }

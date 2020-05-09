@@ -1,6 +1,8 @@
 package core.route;
 
 public class WebServerPath {
+    public static final String REDIRECT_PREFIX = "redirect:";
+
     public static final String ROOT = "/";
     public static final String HOME = "/home";
 

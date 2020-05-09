@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(WebServerPath.USER_CREATE)
+// @WebServlet(WebServerPath.USER_CREATE)
 public class UserCreateServlet extends HttpServlet {
 
     @Override

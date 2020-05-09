@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(WebServerPath.USER_LIST)
+// @WebServlet(WebServerPath.USER_LIST)
 public class UserListServlet extends HttpServlet {
 
     @Override

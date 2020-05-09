@@ -13,6 +13,6 @@ public class UserCreateController implements Controller {
         User user = new User(request.getParameter("userId"), request.getParameter("password"), request.getParameter("name"), request.getParameter("email"));
         DataBase.addUser(user);
 
-        return "redirect:/" + WebServerPath.USER_LIST;
+        return WebServerPath.REDIRECT_PREFIX + WebServerPath.USER_LIST;
     }
 }

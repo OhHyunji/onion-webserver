@@ -17,12 +17,11 @@ public class LoginController implements Controller {
         if(loginUser.isPresent()) {
             request.getSession().setAttribute("user", loginUser.get());
             response.addHeader("Set-Cookie", "login=true");
-            return "redirect:/" + WebServerPath.HOME;
+            return WebServerPath.REDIRECT_PREFIX + WebServerPath.HOME;
         } else {
             response.addHeader("Set-Cookie", "login=false");
             request.setAttribute("loginFailed", true);
-            // TODO 이렇게 보내면 request, response 는 어떻게 넘어가는거지
-            return "/user/login.jsp";
+            return WebServerPath.LOGIN;
         }
     }
 

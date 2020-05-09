@@ -1,12 +1,12 @@
 package webserver.controller;
 
-import webserver.db.DataBase;
-import http.HttpRequest;
-import http.HttpResponse;
-import webserver.model.User;
+import core.db.DataBase;
+import webserver.http.HttpRequest;
+import webserver.http.HttpResponse;
+import core.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.route.FrontPath;
+import core.route.WebAppPath;
 
 public class UserCreateController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(UserCreateController.class);
@@ -14,7 +14,7 @@ public class UserCreateController extends AbstractController {
     @Override
     protected void doPost(HttpRequest request, HttpResponse response) {
         createUser(request.getRequiredParams("userId"), request.getRequiredParams("password"), request.getRequiredParams("name"), request.getRequiredParams("email"));
-        response.redirect(FrontPath.DEFAULT_PAGE);
+        response.redirect(WebAppPath.DEFAULT_PAGE);
     }
 
     @Override

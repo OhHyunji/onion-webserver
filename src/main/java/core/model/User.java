@@ -1,4 +1,4 @@
-package webserver.model;
+package core.model;
 
 public class User {
 	private final String userId;
